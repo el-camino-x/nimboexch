@@ -52,32 +52,27 @@ h1 {
 
     background: linear-gradient(
         270deg,
-        #ff4d4d,
-        #ffb84d,
-        #ffff66,
-        #66ff99,
-        #66ccff,
-        #cc66ff,
-        #ff66cc
+        #ffdd00,
+        #ff66cc,
+        #fff176,
+        #ff99dd,
+        #ffdd00
     );
 
-    background-size: 400% 400%;
+    background-size: 300% 300%;
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    animation: rainbowMove 6s linear infinite;
+    animation: gradientMove 5s ease-in-out infinite;
 
-    margin-top: 2px;
+    margin-top: 2.5px;
 }
 
-@keyframes rainbowMove {
-    0% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 100% 50%;
-    }
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 
