@@ -46,16 +46,38 @@ h1 {
 
 .tagline2 {
     text-align: center;
-    color: #ffffff;
     font-size: 32px;
     font-weight: 700;
     letter-spacing: 2px;
+
+    background: linear-gradient(
+        270deg,
+        #ff4d4d,
+        #ffb84d,
+        #ffff66,
+        #66ff99,
+        #66ccff,
+        #cc66ff,
+        #ff66cc
+    );
+
+    background-size: 300% 300%;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 0.5),
         0 0 6px rgba(0, 0, 0, 0.6);
 
+    animation: gradientMove 6s linear infinite;
+
     margin-top: 2.5px;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 }
 
 .tagline {
