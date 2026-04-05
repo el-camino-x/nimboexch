@@ -69,7 +69,7 @@ overlay.style.cssText = `
   top: 0; left: 0;
   width: 100%; height: 100%;
   backdrop-filter: blur(3px);
-  background: rgba(0,0,20,0.4);
+  background: rgba(42,15,20,0.4);
   display: none;
   align-items: center;
   justify-content: center;
@@ -82,7 +82,7 @@ document.body.appendChild(overlay);
 const box = document.createElement("div");
 box.id = "inspectAlertBox";
 box.style.cssText = `
-  background: #0a0f1d;
+  background: #2a0f14;
   padding: 15px 25px;
   border-radius: 12px;
   text-align: center;      
@@ -90,8 +90,8 @@ box.style.cssText = `
   flex-direction: column;
   justify-content: center;    
   align-items: center;    
-  border: 1px solid rgba(0,150,255,0.3);
-  box-shadow: 0 0 10px rgba(0,150,255,0.3);
+  border: 1px solid rgba(250,162,175,0.3);
+  box-shadow: 0 0 10px rgba(250,162,175,0.3);
   color: white;
   font-family: 'Poppins', sans-serif;
   width: 250px;
@@ -99,7 +99,7 @@ box.style.cssText = `
 `;
 
 box.innerHTML = `
-  <h2 style="font-size:18px;margin-bottom:8px;color:#70c3ff;text-shadow:0 0 4px rgba(0,150,255,0.5);">⚠️ Warning!</h2>
+  <h2 style="font-size:18px;margin-bottom:8px;color:#faa2af;text-shadow: 0 0 4px rgba(250,162,175,0.5);">⚠️ Warning!</h2>
   <p style="font-size:13px;opacity:.85;margin-bottom:0;">Inspect element terdeteksi.</p>
 `;
 overlay.appendChild(box);
