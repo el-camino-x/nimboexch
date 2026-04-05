@@ -64,7 +64,7 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    animation: gradientMove 5s ease-in-out infinite;
+    animation: gradientMove 3s ease-in-out infinite;
 
     margin-top: 2.5px;
 }
