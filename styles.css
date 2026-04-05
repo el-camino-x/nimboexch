@@ -87,8 +87,14 @@ h1 {
     font-weight: 900;
     font-size: clamp(2rem, 5vw, 3rem);
     margin: 0.3rem 0;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.85);
     color: #ffffff;
+
+    text-shadow:
+        0 0 5px rgba(255,255,255,0.6),
+        0 0 10px rgba(0,255,204,0.4),
+        3px 3px 6px rgba(0,0,0,0.85);
+
+    animation: pulseRate 1.5s ease-in-out infinite;
 }
 
 .last-updated {
