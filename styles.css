@@ -1,4 +1,4 @@
-.body {
+body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -307,5 +307,3 @@ h1 {
     }
 }
 
-will-change: transform;
-backface-visibility: hidden;
