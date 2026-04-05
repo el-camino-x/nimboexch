@@ -4,17 +4,6 @@ body {
     overflow-x: hidden;
 }
 
-.logo {
-    width: 120px;
-    margin-bottom: 10px;
-    animation: floatLogo 3s ease-in-out infinite;
-}
-
-@keyframes floatLogo {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-}
-
 #bg-video {
     position: fixed;
     top: 0;
