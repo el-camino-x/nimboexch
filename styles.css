@@ -2,12 +2,6 @@
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100vh;
 }
 
 #bg-video {
@@ -31,9 +25,6 @@
     text-align: center;
     font-family: 'Poppins', sans-serif;
     justify-content: center;
-    max-width: 900px;
-    width: 100%;
-    padding: 20px;
 }
 
 
