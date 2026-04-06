@@ -188,6 +188,7 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 15px;
+    grid-template-columns: repeat(2, 200px);
     margin: 2rem auto;
     flex-wrap: wrap;
 }
