@@ -49,3 +49,16 @@ dollarInput.addEventListener('input', () => {
   const hasil = currentRate * dollar;
   resultSpan.textContent = hasil.toLocaleString('id-ID');
 });
+
+const bubble = document.getElementById('contact-bubble');
+const popup = document.getElementById('contact-popup');
+
+bubble.addEventListener('click', function(e) {
+  popup.classList.toggle('show');
+});
+
+document.addEventListener('click', function(e) {
+  if (!bubble.contains(e.target) && !popup.contains(e.target)) {
+    popup.classList.remove('show');
+  }
+});
