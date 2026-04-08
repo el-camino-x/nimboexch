@@ -367,7 +367,7 @@ h1 {
 #contact-bubble {
   width: 50px;
   height: 50px;
-  background: #FFD700;
+  background: linear-gradient(135deg, #E6B800, #FFD700); /* dark yellow → yellow */
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -375,12 +375,13 @@ h1 {
   color: #fff;
   font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3), 0 0 10px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 8px rgba(255, 215, 0, 0.6); /* shadow + glow */
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #contact-bubble:hover {
   transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.45), 0 0 12px rgba(255, 223, 0, 0.7);
 }
 
 #contact-popup {
