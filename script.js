@@ -219,6 +219,11 @@ async function sendMessage() {
     return;
   }
 
+  if (detectContactIntent(msg)) {
+  addMessage("Untuk kontak admin (WhatsApp / Telegram), silakan klik bubble di kanan bawah ya 📲", "bot");
+  return;
+}
+
   const typing = showTyping();
 
   const res = await fetch(`${API_URL}?action=chat&message=${encodeURIComponent(msg)}`);
@@ -240,8 +245,20 @@ window.addEventListener("load", () => {
     chatPopup.style.display = "flex";
 
     if (!chatBox.dataset.welcomeShown) {
-      addMessage("Halo 👋 Nimbo Live Chat siap bantu kamu!", "bot");
+      addMessage("Halo 👋 Nimbo Live Chat siap bantu kamu! , Untuk Contact Admin ( Whatsapp / Telegram bisa klik bubble di sebelah kanan ya kak! 😊)", "bot");
       chatBox.dataset.welcomeShown = "true";
     }
   }, 800);
 });
+
+function detectContactIntent(msg) {
+  const text = msg.toLowerCase();
+
+  const keywords = [
+    "kontak", "admin", "cs", "customer service",
+    "wa", "whatsapp", "telegram", "tele",
+    "hubungi", "contact", "nomor", "no wa"
+  ];
+
+  return keywords.some(k => text.includes(k));
+}
