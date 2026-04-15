@@ -147,6 +147,19 @@ const sendBtn = document.getElementById("nimbo-send");
 
 const API_URL = "https://script.google.com/macros/s/AKfycbya3cI2gUeY0O0pVQZ01w-bAvFPL9EtV3AznMuqMyemEPv3qtIu80qeV-Iu8M-OSGFvfg/exec";
 
+const keywordMap = {
+  "halo": "Halo kak 😊 Ada yang bisa Nimbo bantu?",
+  "hi": "Halo kak 😊 Nimbo siap bantu 😊",
+  "hello": "Halo! Selamat datang di Nimbo Exchange 😊 Ada yang bisa Nimbo bantu?",
+  "rate": "Rate bisa dicek di halaman utama ya kak 😊",
+  "tukar": "Siap kak 😊 langsung hubungi admin ya 👍",
+  "admin": "Untuk bantuan hubungi admin ya 😊"
+};
+
+function keywordCheck(msg) {
+  const clean = msg.toLowerCase().trim();
+  return keywordMap[clean] || null;
+}
 
 chatBubble.addEventListener("click", () => {
   const isOpen = chatPopup.style.display === "flex";
@@ -205,6 +218,43 @@ function detectCalculation(msg) {
   return `💱 ${amount} USD = Rp${result.toLocaleString("id-ID")} 😊`;
 }
 
+function similarity(a, b) {
+  let longer = a.length > b.length ? a : b;
+  let shorter = a.length > b.length ? b : a;
+
+  let longerLength = longer.length;
+  if (longerLength === 0) return 1.0;
+
+  let matches = 0;
+  for (let i = 0; i < shorter.length; i++) {
+    if (longer.includes(shorter[i])) matches++;
+  }
+
+  return matches / longerLength;
+}
+
+function fuzzyCheck(msg) {
+  const keys = Object.keys(keywordMap);
+
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (let key of keys) {
+    const score = similarity(msg.toLowerCase(), key);
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = key;
+    }
+  }
+
+  if (bestScore >= 0.6) {
+    return keywordMap[bestMatch];
+  }
+
+  return null;
+}
+
 
 async function sendMessage() {
   const msg = input.value.trim();
@@ -221,6 +271,18 @@ async function sendMessage() {
 
   if (detectContactIntent(msg)) {
   addMessage("Untuk kontak admin (WhatsApp / Telegram), silakan klik bubble di kanan bawah ya 📲", "bot");
+  return;
+}
+
+const keywordReply = keywordCheck(msg);
+  if (keywordReply) {
+    addMessage(keywordReply, "bot");
+    return;
+  }
+
+const fuzzyReply = fuzzyCheck(msg);
+if (fuzzyReply) {
+  addMessage(fuzzyReply, "bot");
   return;
 }
 
