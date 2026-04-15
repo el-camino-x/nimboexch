@@ -2,7 +2,6 @@ const dollarInput = document.getElementById('dollar');
 const resultSpan = document.getElementById('result');
 const rateDiv = document.querySelector('.rate');
 const lastUpdatedDiv = document.querySelector('.last-updated');
-
 const toastContainer = document.getElementById('toast-container');
 
 
@@ -37,17 +36,10 @@ fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRIefvbp0yDlYWWzhw-gnVjKg
 
 
 dollarInput.addEventListener('input', () => {
-  if (!currentRate) {
-    resultSpan.textContent = '-';
-    return;
-  }
+  if (!currentRate) return resultSpan.textContent = '-';
 
   const dollar = parseFloat(dollarInput.value);
-
-  if (isNaN(dollar)) {
-    resultSpan.textContent = '-';
-    return;
-  }
+  if (isNaN(dollar)) return resultSpan.textContent = '-';
 
   const hasil = currentRate * dollar;
   resultSpan.textContent = hasil.toLocaleString('id-ID');
@@ -76,20 +68,13 @@ let fakeCounter = 0;
 
 function maskName(name) {
   if (!name) return "";
-
   const clean = name.trim().toUpperCase();
-
   if (clean.length <= 3) return clean;
-
-  const first = clean.slice(0, 2);
-  const stars = "*****";
-
-  return first + stars;
+  return clean.slice(0, 2) + "*****";
 }
 
 function getFakeTime() {
   fakeCounter++;
-
   if (fakeCounter % 5 === 0) return "just now";
   if (fakeCounter % 5 === 1) return "2s ago";
   if (fakeCounter % 5 === 2) return "5s ago";
@@ -101,7 +86,7 @@ async function loadBuyerData() {
   try {
     const res = await fetch(BUYER_API);
     buyerData = shuffleArray(await res.json());
-index = Math.floor(Math.random() * buyerData.length);
+    index = Math.floor(Math.random() * buyerData.length);
   } catch (err) {
     console.error('Buyer API error:', err);
   }
@@ -145,13 +130,91 @@ function startBuyerLoop() {
 
     index++;
     if (index >= buyerData.length) {
-  buyerData = shuffleArray(buyerData);
-  index = 0;
-}
-
+      buyerData = shuffleArray(buyerData);
+      index = 0;
+    }
   }, 8000);
 }
 
-loadBuyerData().then(() => {
-  startBuyerLoop();
+loadBuyerData().then(startBuyerLoop);
+
+
+const chatBubble = document.getElementById("nimbo-chat-bubble");
+const chatPopup = document.getElementById("nimbo-chat-popup");
+const chatBox = document.getElementById("nimbo-chat-box");
+const input = document.getElementById("nimbo-input");
+const sendBtn = document.getElementById("nimbo-send");
+
+const API_URL = "https://script.google.com/macros/s/AKfycbzYQD3q8cydUlye11HT1A-ymAuhcd8loBr7mEeuR-t7F7dz0o5IF_i_0URJFX2i1PBBSw/exec";
+
+
+chatBubble.addEventListener("click", () => {
+  const isOpen = chatPopup.style.display === "flex";
+  chatPopup.style.display = isOpen ? "none" : "flex";
+
+  if (!chatBox.dataset.welcomeShown && !isOpen) {
+    setTimeout(() => {
+      addMessage("Halo 👋 Nimbo Live Chat siap bantu kamu!", "bot");
+    }, 300);
+
+    chatBox.dataset.welcomeShown = "true";
+  }
+});
+
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.classList.add("message", type);
+  div.textContent = text;
+
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function showTyping() {
+  const typing = document.createElement("div");
+  typing.style.margin = "5px 0";
+  typing.style.padding = "6px 10px";
+  typing.style.borderRadius = "8px";
+  typing.style.background = "rgba(255,255,255,0.15)";
+  typing.style.color = "white";
+  typing.innerHTML = `Nimbo sedang mengetik<span class="dots"><span>.</span><span>.</span><span>.</span></span>`;
+
+  chatBox.appendChild(typing);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  return typing;
+}
+
+async function sendMessage() {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  addMessage(msg, "user");
+  input.value = "";
+
+  const typing = showTyping();
+
+  const res = await fetch(`${API_URL}?action=chat&message=${encodeURIComponent(msg)}`);
+  const data = await res.json();
+
+  typing.remove();
+
+  addMessage(data.reply, "bot");
+}
+
+sendBtn.addEventListener("click", sendMessage);
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    chatPopup.style.display = "flex";
+
+    if (!chatBox.dataset.welcomeShown) {
+      addMessage("Halo 👋 Nimbo Live Chat siap bantu kamu!", "bot");
+      chatBox.dataset.welcomeShown = "true";
+    }
+  }, 800);
 });
