@@ -307,7 +307,7 @@ window.addEventListener("load", () => {
     chatPopup.style.display = "flex";
 
     if (!chatBox.dataset.welcomeShown) {
-      addMessage("Halo 👋 Nimbo Live Chat siap bantu kamu! , Untuk Contact Admin ( Whatsapp / Telegram bisa klik bubble di sebelah kanan ya kak! 😊)", "bot");
+      addMessage("Halo 👋 Nimbo Live Chat siap bantu kamu! , Untuk Contact Admin ( Whatsapp / Telegram ) bisa klik bubble di sebelah kanan ya kak! 😊", "bot");
       chatBox.dataset.welcomeShown = "true";
     }
   }, 800);
