@@ -4,8 +4,8 @@ const rateDiv = document.querySelector('.rate');
 const lastUpdatedDiv = document.querySelector('.last-updated');
 const toastContainer = document.getElementById('toast-container');
 
-
 let currentRate = null;
+
 
 fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRIefvbp0yDlYWWzhw-gnVjKgyh0GvADomMb_0yqhXpArd-29mVfVNWdHACI8kJ9TtPd1LBTOVW7YEc/pub?output=csv')
 .then(res => res.text())
@@ -49,11 +49,11 @@ dollarInput.addEventListener('input', () => {
 const bubble = document.getElementById('contact-bubble');
 const popup = document.getElementById('contact-popup');
 
-bubble.addEventListener('click', function() {
+bubble.addEventListener('click', function () {
   popup.classList.toggle('show');
 });
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   if (!bubble.contains(e.target) && !popup.contains(e.target)) {
     popup.classList.remove('show');
   }
@@ -161,6 +161,7 @@ chatBubble.addEventListener("click", () => {
   }
 });
 
+
 function addMessage(text, type) {
   const div = document.createElement("div");
   div.classList.add("message", type);
@@ -185,6 +186,26 @@ function showTyping() {
   return typing;
 }
 
+
+function detectCalculation(msg) {
+  const match = msg.match(/\d+(\.\d+)?/);
+  if (!match) return null;
+
+  const amount = parseFloat(match[0]);
+
+  const triggerWords = ["usd", "dollar", "$", "berapa"];
+  const isDollar = triggerWords.some(word => msg.toLowerCase().includes(word));
+
+  if (!isDollar) return null;
+
+  if (!currentRate) return "Rate belum tersedia kak 😢";
+
+  const result = amount * currentRate;
+
+  return `💱 ${amount} USD = Rp${result.toLocaleString("id-ID")} 😊`;
+}
+
+
 async function sendMessage() {
   const msg = input.value.trim();
   if (!msg) return;
@@ -192,13 +213,18 @@ async function sendMessage() {
   addMessage(msg, "user");
   input.value = "";
 
+  const calc = detectCalculation(msg);
+  if (calc) {
+    addMessage(calc, "bot");
+    return;
+  }
+
   const typing = showTyping();
 
   const res = await fetch(`${API_URL}?action=chat&message=${encodeURIComponent(msg)}`);
   const data = await res.json();
 
   typing.remove();
-
   addMessage(data.reply, "bot");
 }
 
@@ -207,6 +233,7 @@ sendBtn.addEventListener("click", sendMessage);
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") sendMessage();
 });
+
 
 window.addEventListener("load", () => {
   setTimeout(() => {
