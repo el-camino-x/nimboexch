@@ -145,7 +145,7 @@ const chatBox = document.getElementById("nimbo-chat-box");
 const input = document.getElementById("nimbo-input");
 const sendBtn = document.getElementById("nimbo-send");
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzYQD3q8cydUlye11HT1A-ymAuhcd8loBr7mEeuR-t7F7dz0o5IF_i_0URJFX2i1PBBSw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbya3cI2gUeY0O0pVQZ01w-bAvFPL9EtV3AznMuqMyemEPv3qtIu80qeV-Iu8M-OSGFvfg/exec";
 
 
 chatBubble.addEventListener("click", () => {
